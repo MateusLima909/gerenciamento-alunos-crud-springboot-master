@@ -1,96 +1,85 @@
 package br.com.gerenciamento.controller;
 
-import br.com.gerenciamento.repository.UsuarioRepository;
-import br.com.gerenciamento.exception.ServiceExc;
 import br.com.gerenciamento.model.Aluno;
 import br.com.gerenciamento.model.Usuario;
 import br.com.gerenciamento.service.ServiceUsuario;
-import br.com.gerenciamento.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.NoSuchAlgorithmException;
 
 @Controller
 public class UsuarioController {
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-
-    @Autowired
     private ServiceUsuario serviceUsuario;
+
+    // Constantes para evitar erros de digitação e facilitar manutenção
+    private static final String VIEW_LOGIN = "login/login";
+    private static final String VIEW_CADASTRO = "login/cadastro";
+    private static final String REDIRECT_INDEX = "redirect:/index";
+    private static final String REDIRECT_HOME = "redirect:/";
 
     @GetMapping("/")
     public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login/login");
-        modelAndView.addObject("usuario", new Usuario());
-        return modelAndView;
-    }
-
-    @GetMapping("/index")
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home/index");
-        modelAndView.addObject("aluno", new Aluno());
-        return modelAndView;
+        return new ModelAndView(VIEW_LOGIN).addObject("usuario", new Usuario());
     }
 
     @GetMapping("/cadastro")
     public ModelAndView cadastrar() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("usuario", new Usuario());
-        modelAndView.setViewName("login/cadastro");
-        return modelAndView;
+        return new ModelAndView(VIEW_CADASTRO).addObject("usuario", new Usuario());
+    }
+
+    @GetMapping("/index")
+    public ModelAndView index(HttpSession session) {
+        if (session.getAttribute("usuarioLogado") == null) return new ModelAndView(REDIRECT_HOME);
+        
+        return new ModelAndView("home/index").addObject("aluno", new Aluno());
     }
 
     @PostMapping("/salvarUsuario")
-    public ModelAndView cadastrar(@Valid Usuario usuario, BindingResult br) throws Exception {
-        ModelAndView modelAndView = new ModelAndView();
-        
-        if(br.hasErrors()) {
-            modelAndView.setViewName("login/cadastro");
-            modelAndView.addObject("usuario", usuario); 
-            return modelAndView;
-        }
+    public ModelAndView salvar(@Valid Usuario usuario, BindingResult br, RedirectAttributes attr) {
+        if (br.hasErrors()) return retornarParaCadastro(usuario);
 
-        serviceUsuario.salvarUsuario(usuario);
-        modelAndView.setViewName("redirect:/");
-        return modelAndView;
+        try {
+            serviceUsuario.salvarUsuario(usuario);
+            attr.addFlashAttribute("message", "Cadastro realizado com sucesso!");
+            return new ModelAndView(REDIRECT_HOME);
+        } catch (Exception e) {
+            return retornarParaCadastro(usuario).addObject("message", e.getMessage());
+        }
     }
 
     @PostMapping("/login")
-    public ModelAndView login(@Valid Usuario usuario, BindingResult br, HttpSession session) throws NoSuchAlgorithmException, ServiceExc {
-        ModelAndView modelAndView = new ModelAndView();
-        
-        if(br.hasErrors()) {
-            modelAndView.setViewName("login/login");
-            return modelAndView;
-        }
+    public ModelAndView realizarLogin(Usuario usuario, HttpSession session) {
+        try {
+            // A mágica do MD5 foi para dentro do Service!
+            Usuario userLogin = serviceUsuario.loginUser(usuario.getUser(), usuario.getSenha());
+            
+            if (userLogin == null) {
+                return new ModelAndView(VIEW_LOGIN).addObject("message", "Usuário ou senha inválidos.");
+            }
 
-        Usuario userLogin = serviceUsuario.loginUser(usuario.getUser(), Util.md5(usuario.getSenha()));
-        
-        if(userLogin == null) {
-            modelAndView.setViewName("login/login");
-            modelAndView.addObject("message","Usuário ou senha inválidos.");
-        } else {
             session.setAttribute("usuarioLogado", userLogin);
-            modelAndView.setViewName("redirect:/index"); // Use o redirect para mudar de página!
+            return new ModelAndView(REDIRECT_INDEX);
+        } catch (Exception e) {
+            return new ModelAndView(VIEW_LOGIN).addObject("message", "Erro ao processar login.");
         }
-
-        return modelAndView;
     }
 
     @PostMapping("/logout")
-    public ModelAndView logout(HttpSession session) {
+    public String logout(HttpSession session) {
         session.invalidate();
-        return login();
+        return REDIRECT_HOME;
+    }
+
+    private ModelAndView retornarParaCadastro(Usuario usuario) {
+        return new ModelAndView(VIEW_CADASTRO).addObject("usuario", usuario);
     }
 }

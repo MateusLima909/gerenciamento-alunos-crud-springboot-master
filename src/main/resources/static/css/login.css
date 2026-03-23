@@ -1,31 +1,87 @@
 @charset "UTF-8";
 
-.Login-Form{min-height: 960px; background-image: url('/img/bg-login.jpg');
-background-position: center; background-size: cover; background-repeat: no-repeat;}
-.Login-Form{display: flex; align-items: center; flex-direction: row; flex-wrap: wrap;
-justify-content: center; text-align: center;}
-
-.main-div{background: #fffff; border-radius: 5px; margin: 0 auto; max-width: 50%; padding: 50px 70px;}
-
-.form-control{background: #f7f7f7; border-radius: 7px; font-size: 15px; height: 50px; line-height: 50px;
-border: 2px solid #d4d4d4;}
-
-.form-group{margin: 10px;}
-
-.btn.btn-primary{
-    background: #024d57;
-    border-color: #d4d4d4;
-    font-size: 1.1em;
-    padding: 0;
-    height: 40px;
-    width: 50%;
-    margin: 10px;
+:root {
+    --primary-color: #024d57;
+    --accent-color: #8fecec;
+    --glass-bg: rgba(255, 255, 255, 0.85);
 }
-.btn.btn-info{
-    background: #8fecec;
-    border-color: #d4d4d4;
-    font-size: 1.1em;
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
     padding: 0;
-    height: 40px;
-    width: 50%;
+}
+
+.registration-container {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('/img/bg-login.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+}
+
+.input-group-text {
+    background: white;
+    border: 1px solid #ced4da;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    color: var(--primary-color);
+}
+
+.form-control {
+    border-radius: 0 10px 10px 0;
+    height: 50px;
+    border-left: none;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+    background: white;
+}
+
+.btn-main {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.btn-main:hover {
+    background-color: #01363d;
+    filter: brightness(1.1);
+    color: white;
+}
+
+.btn-outline-secondary {
+    border-radius: 10px;
+    border: 2px solid #6c757d;
+}
+
+.alert-custom {
+    background-color: #f8d7da;
+    color: #842029;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9em;
 }

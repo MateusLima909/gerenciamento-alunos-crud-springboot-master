@@ -17,23 +17,31 @@ public class ServiceUsuario {
     private UsuarioRepository usuarioRepository;
 
     public void salvarUsuario(Usuario user) throws Exception {
-
-        try {
-
-            if(usuarioRepository.findByEmail(user.getEmail()) !=null) {
-                throw new EmailExistsException("Este email já esta cadastrado: " + user.getEmail());
-            }
-
-            user.setSenha(Util.md5(user.getSenha()));
-
-        } catch (NoSuchAlgorithmException e) {
-            throw new CriptoExistsException("Error na criptografia da senha");
-        }
+        validarEmailExistente(user.getEmail());
+        user.setSenha(gerarHash(user.getSenha()));
         usuarioRepository.save(user);
     }
 
-    public Usuario loginUser(String user, String senha) throws ServiceExc {
+    public Usuario loginUser(String login, String senhaPura) throws ServiceExc {
+        try {
+            String senhaCriptografada = gerarHash(senhaPura);
+            return usuarioRepository.buscarLogin(login, senhaCriptografada);
+        } catch (Exception e) {
+            throw new ServiceExc("Erro ao processar a autenticação.");
+        }
+    }
 
-        return usuarioRepository.buscarLogin(user, senha);
+    private void validarEmailExistente(String email) throws EmailExistsException {
+        if (usuarioRepository.findByEmail(email) != null) {
+            throw new EmailExistsException("Este email já está cadastrado: " + email);
+        }
+    }
+
+    private String gerarHash(String senha) throws CriptoExistsException {
+        try {
+            return Util.md5(senha);
+        } catch (NoSuchAlgorithmException e) {
+            throw new CriptoExistsException("Falha crítica no motor de criptografia.");
+        }
     }
 }

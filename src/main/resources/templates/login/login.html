@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
-  <title>Sistema de Gerenciamento de Alunos - Login</title>
-  <meta name="author" content="Julius Cavalcante">
-  <link rel="stylesheet" href="css/login.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
-  <script src="https://kit.fontawesome.com/006642858d.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Sistema Acadêmico</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css">
 </head>
-    <body>
-        <div class="Login-Form">
-          <div class="container">
-            <div class="main-div">
-              <div class="texto-header">
-                <h2>Login</h2>
-                <p>Insira suas credenciais para efetuar o Login no Sistema.</p>
-              </div>
-
-              <form method="post" action="login" th:object="${usuario}">
-
-              <div class="alert alert-danger" role="alert" th:if="${message}">
-                  <strong th:text="${message}"></strong>
-              </div>
-                  <div class="form-group">
-                    <input type="text" th:field="*{user}" class="form-control" placeholder="username">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" th:field="*{senha}" class="form-control" placeholder="senha">
-                  </div>
-                  <div class="cadastro">
-                    <a th:href="@{cadastro}">Clique aqui para se cadastrar</a>
-                  </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-              </form>
+<body>
+    <section class="registration-container">
+        <div class="glass-card shadow-lg">
+            <div class="text-center mb-4">
+                <h2 class="fw-bold text-dark">Bem-vindo</h2>
+                <p class="text-secondary">Acesse sua conta para gerenciar alunos</p>
             </div>
-          </div>
+
+            <div class="alert alert-custom alert-dismissible fade show" role="alert" th:if="${message}">
+                <i class="bi bi-exclamation-circle-fill me-2"></i>
+                <span th:text="${message}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert" th:if="${msg_success}">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <span th:text="${msg_success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+            <form method="post" th:action="@{/login}" th:object="${usuario}">
+                <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="bi bi-person-circle"></i></span>
+                    <input type="text" th:field="*{user}" class="form-control" placeholder="Usuário ou E-mail" required>
+                </div>
+
+                <div class="input-group mb-4">
+                    <span class="input-group-text"><i class="bi bi-shield-lock"></i></span>
+                    <input type="password" th:field="*{senha}" class="form-control" placeholder="Sua senha" required>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-main btn-lg shadow-sm">Entrar no Sistema</button>
+                    <hr class="my-3">
+                    <p class="text-muted small mb-1">Ainda não tem acesso?</p>
+                    <a th:href="@{/cadastro}" class="btn btn-outline-secondary btn-sm">Criar nova conta</a>
+                </div>
+            </form>
         </div>
-    </body>
+    </section>
+
+    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

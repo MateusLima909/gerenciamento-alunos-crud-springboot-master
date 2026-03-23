@@ -3,67 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Gerenciamento de Alunos</title>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
-    <title>Sistema de Gerenciamento de Alunos</title>
-    <meta name="author" content="Julius Cavalcante">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
-    <script src="https://kit.fontawesome.com/006642858d.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
-    <section class="neo-section" style="background-image: url('img/bg-index.jpg');">
-    <div class="sombra"></div>
 
-    <div class="center neo-container">
-        <h1 class="texto-centro">Sistema de Gerenciamento de Alunos</h1>
+    <main class="dashboard-wrapper">
+        <div class="overlay"></div>
+        
+        <div class="container content-area">
+            <div class="welcome-text text-center mb-5">
+                <h1 class="display-4 fw-bold text-white">Painel de Controle</h1>
+                <p class="lead text-light">Olá, Mateus! O que deseja gerenciar hoje?</p>
+            </div>
 
-    <div class="botoes">
-
-    <div class="wm">
-        <a th:href="@{inserirAlunos}" class="btn-index">CADASTRAR ALUNO</a>
-    </div>
-
-    <div class="wm">
-        <a th:href="@{filtro-alunos}" class="btn-index justify-content-center">ENCONTRAR ALUNO</a>
-    </div>
-
-    <div class="clear"></div>
-        </div>
-    </div>
-    </section>
-
-    <!-- Inicio do Modal -->
-    <div class="modal fade" id="modalPesquisa">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-
-                    <h5 class="modal-title">Encontre um Aluno</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                    </button>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-5 col-lg-4">
+                    <a th:href="@{inserirAlunos}" class="dashboard-card shadow">
+                        <div class="card-icon">
+                            <i class="bi bi-person-plus-fill"></i>
+                        </div>
+                        <h3>Cadastrar Aluno</h3>
+                        <p>Adicione novos estudantes ao sistema acadêmico.</p>
+                        <span class="btn-action">Acessar <i class="bi bi-arrow-right"></i></span>
+                    </a>
                 </div>
 
-                <form method="post" action="pesquisar-aluno" th:object="${aluno}">
-
-                <div class="modal-body">
-                    <input type="text" placeholder="Digite o nome do Aluno" th:field="*{nome}">
-                </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-success">Pesquisar</button>
+                <div class="col-md-5 col-lg-4">
+                    <div class="dashboard-card shadow" data-toggle="modal" data-target="#modalPesquisa">
+                        <div class="card-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h3>Encontrar Aluno</h3>
+                        <p>Pesquise e filtre alunos cadastrados na base.</p>
+                        <span class="btn-action">Pesquisar <i class="bi bi-arrow-right"></i></span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
+    <div class="modal fade" id="modalPesquisa" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content glass-modal">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold">Busca Rápida</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="pesquisar-aluno" th:object="${aluno}">
+                    <div class="modal-body py-4">
+                        <label class="form-label text-muted">Nome do Aluno</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control" placeholder="Ex: Mateus Lima" th:field="*{nome}" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-link text-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-main px-4">Pesquisar Agora</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
+
     <div th:replace="fragmentos/fragmentos :: rodape"></div>
+
     <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
-    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
