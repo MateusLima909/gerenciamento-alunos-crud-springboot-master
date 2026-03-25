@@ -19,7 +19,7 @@
         <div class="container content-area">
             <div class="welcome-text text-center mb-5">
                 <h1 class="display-4 fw-bold text-white">Painel de Controle</h1>
-                <p class="lead text-light">Olá, Mateus! O que deseja gerenciar hoje?</p>
+                <p class="lead text-light">Olá, <span th:text="${session.usuario.nome}"></span>! O que deseja gerenciar hoje?</p>
             </div>
 
             <div class="row g-4 justify-content-center">

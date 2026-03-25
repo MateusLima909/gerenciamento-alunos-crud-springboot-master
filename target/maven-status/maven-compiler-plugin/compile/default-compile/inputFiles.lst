@@ -1,6 +1,7 @@
 /workspaces/gerenciamento-alunos-crud-springboot-master/src/main/java/br/com/gerenciamento/controller/UsuarioController.java
 /workspaces/gerenciamento-alunos-crud-springboot-master/src/main/java/br/com/gerenciamento/model/Aluno.java
 /workspaces/gerenciamento-alunos-crud-springboot-master/src/main/java/br/com/gerenciamento/GerenciamentoAlunosApplication.java
+/workspaces/gerenciamento-alunos-crud-springboot-master/src/main/java/br/com/gerenciamento/exception/UserExistsException.java
 /workspaces/gerenciamento-alunos-crud-springboot-master/src/main/java/br/com/gerenciamento/util/Util.java
 /workspaces/gerenciamento-alunos-crud-springboot-master/src/main/java/br/com/gerenciamento/controller/AlunoController.java
 /workspaces/gerenciamento-alunos-crud-springboot-master/src/main/java/br/com/gerenciamento/repository/UsuarioRepository.java

@@ -20,7 +20,6 @@ public class UsuarioController {
     @Autowired
     private ServiceUsuario serviceUsuario;
 
-    // Constantes para evitar erros de digitação e facilitar manutenção
     private static final String VIEW_LOGIN = "login/login";
     private static final String VIEW_CADASTRO = "login/cadastro";
     private static final String REDIRECT_INDEX = "redirect:/index";

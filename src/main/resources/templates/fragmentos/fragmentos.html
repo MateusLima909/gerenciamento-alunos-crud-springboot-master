@@ -25,6 +25,9 @@
                         <li class="nav-item">
                             <a class="nav-link mx-2" th:href="@{filtro-alunos}"><i class="bi bi-search me-1"></i> Pesquisar</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2" th:href="@{filtro-notas-enade}"><i class="bi bi-search me-1"></i> Média Notas ENADE</a>
+                        </li>
                         <li class="nav-item ms-lg-3">
                             <form th:action="@{/logout}" method="post">
                                 <button type="submit" class="btn btn-logout d-flex align-items-center">
@@ -42,7 +45,7 @@
         <div class="container text-center">
             <hr class="border-secondary opacity-25">
             <p class="mb-0 text-muted small">
-                &copy; 2026 Academy Spring - Refatorad por <span class="fw-bold text-dark">Mateus Lima</span>
+                &copy; 2026 Academy Spring - Refatorado por <span class="fw-bold text-dark">Mateus Lima</span>
             </p>
             <p class="text-muted extra-small">Todos os direitos reservados.</p>
         </div>

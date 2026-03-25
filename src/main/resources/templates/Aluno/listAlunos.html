@@ -28,6 +28,7 @@
             <th scope="col">Matricula</th>
             <th scope="col">Status</th>
             <th scope="col">Turno</th>
+            <th scope="col">Nota Enade</th>
             <th scope="col">Ação</th>
 
         </thead>
@@ -40,6 +41,7 @@
                 <td th:text="${alunos.matricula}"></td>
                 <td th:text="${alunos.status}"></td>
                 <td th:text="${alunos.turno}"></td>
+                <td th:text="${alunos.notaEnade}"></td>
                 <td>
                  <a class="btn btn-primary" th:href="@{editar/{id}(id=${alunos.id})}">
                  <i class="bi bi-pencil-square"></i> Editar</a>

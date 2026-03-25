@@ -46,6 +46,10 @@ public class Aluno {
     @NotNull
     private Turno turno;
 
+    @Column(name = "notaEnade")
+    @NotNull
+    private Double notaEnade;
+
     public Long getId() {
         return id;
     }
@@ -96,5 +100,13 @@ public class Aluno {
 
     public void setTurno(Turno turno) {
         this.turno = turno;
+    }
+
+    public Double getNota() {
+        return notaEnade;
+    }
+
+    public void setNota(Double notaEnade) {
+        this.notaEnade = notaEnade;
     }
 }
