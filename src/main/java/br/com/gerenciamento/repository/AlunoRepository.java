@@ -1,5 +1,6 @@
 package br.com.gerenciamento.repository;
 
+import br.com.gerenciamento.enums.Status;
 import br.com.gerenciamento.model.Aluno;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     @Query("SELECT i FROM Aluno i WHERE i.status = 'INATIVO' ")
     public List<Aluno> findByStatusInativo();
 
-    public List<Aluno> findByNomeContainingIgnoreCase(String nome);
-
+    List<Aluno> findByNomeContainingIgnoreCase(String nome);
+    List<Aluno> findByStatus(Status status);
+    Aluno findByEmail(String email);
 }

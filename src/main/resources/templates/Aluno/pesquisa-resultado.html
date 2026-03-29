@@ -3,49 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Pesquisa | AcademySpring</title>
     <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
-    <title>Sistema de Gerenciamento de Alunos</title>
-    <meta name="author" content="Julius Cavalcante">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
-    <script src="https://kit.fontawesome.com/006642858d.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
 
-        <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+    <main class="dashboard-wrapper">
+        <div class="overlay"></div>
+        
+        <div class="container content-area">
+            
+            <div th:replace="fragmentos/fragmentos :: alertas"></div>
 
-        <div class="container">
-        <h3>Alunos Encontrados na Pesquisa</h3>
-        <hr>
+            <div class="glass-card shadow-lg p-4">
+                <div class="mb-4 text-center">
+                    <h2 class="fw-bold text-white">Resultados da Pesquisa</h2>
+                    <p class="text-light opacity-75">Exibindo alunos encontrados na base de dados</p>
+                </div>
 
-        <table class="table table-bordered table-hover">
+                <div class="table-responsive">
+                    <table class="table table-custom table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome do Aluno</th>
+                                <th scope="col">Curso Relacionado</th>
+                                <th scope="col" class="text-center">Ações de Gerenciamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(ListaDeAlunos)}">
+                                <td colspan="3" class="text-center text-white py-5">
+                                    <i class="bi bi-search fs-1 opacity-25"></i>
+                                    <p class="mt-2">Nenhum aluno encontrado com esse nome.</p>
+                                </td>
+                            </tr>
+                            
+                            <tr th:each="alunos : ${ListaDeAlunos}">
+                                <td class="fw-bold text-white" th:text="${alunos.nome}"></td>
+                                <td><span class="badge bg-dark-soft" th:text="${alunos.curso}"></span></td>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-info me-2 border-0" th:href="@{editar/{id}(id=${alunos.id})}">
+                                            <i class="bi bi-pencil-square fs-5"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-danger border-0" th:href="@{remover/{id}(id=${alunos.id})}" onclick="return confirm('Excluir aluno?')">
+                                            <i class="bi bi-trash3 fs-5"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-        <thead>
-            <th scope="col">Nome</th>
-            <th scope="col">Curso</th>
-            <th scope="col">Ação</th>
-
-        </thead>
-        <tbody>
-            <tr scope="row" th:each="alunos : ${ListaDeAlunos}">
-
-                <td th:text="${alunos.nome}"></td>
-                <td th:text="${alunos.curso}"></td>
-
-                <td>
-                 <a class="btn btn-primary" th:href="@{editar/{id}(id=${alunos.id})}">
-                 <i class="bi bi-pencil-square"></i> Editar</a>
-
-                 <a class="btn btn-danger" th:href="@{remover/{id}(id=${alunos.id})}">
-                 <i class="bi bi-x-square"></i> Remover</a>
-
-                </td>
-            </tr>
-        </tbody>
-        </table>
+                <div class="text-center mt-4">
+                    <a th:href="@{/index}" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-arrow-left"></i> Voltar ao Início
+                    </a>
+                </div>
+            </div>
         </div>
-        <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
-        <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    </main>
+
+    <div th:replace="fragmentos/fragmentos :: modalPesquisa"></div>
+
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
