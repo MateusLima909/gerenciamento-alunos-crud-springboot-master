@@ -25,7 +25,7 @@
                         <h2 class="fw-bold text-white mb-0">Alunos Cadastrados</h2>
                         <p class="text-light opacity-75 small">Gerencie a base de dados acadêmica</p>
                     </div>
-                    <a th:href="@{/inserirAlunos}" class="btn btn-accent shadow-sm">
+                    <a th:href="@{/inserir-alunos}" class="btn btn-primary shadow-sm">
                         <i class="bi bi-plus-lg me-1"></i> Novo Aluno
                     </a>
                 </div>
@@ -51,23 +51,25 @@
                                 </td>
                             </tr>
 
-                            <tr th:each="alunos : ${alunosList}">
-                                <td class="fw-bold text-white" th:text="${alunos.nome}"></td>
-                                <td class="text-light opacity-75" th:text="${alunos.email}"></td>
-                                <td><span class="badge bg-dark-soft" th:text="${alunos.curso}"></span></td>
-                                <td class="text-accent fw-bold" th:text="${alunos.matricula}"></td>
-                                <td class="text-white small" th:text="${alunos.turno}"></td>
+                            <tr th:each="aluno : ${alunosList}">
+                                <td class="fw-bold text-white" th:text="${aluno.nome}"></td>
+                                <td class="text-light opacity-75" th:text="${aluno.email}"></td>
+                                <td><span class="badge bg-dark-soft" th:text="${aluno.curso}"></span></td>
+                                <td class="text-accent fw-bold" th:text="${aluno.matricula}"></td>
+                                <td class="text-white small" th:text="${aluno.turno}"></td>
                                 <td class="text-center">
-                                    <span th:classappend="${alunos.status.toString() == 'ATIVO'} ? 'badge rounded-pill bg-success' : 'badge rounded-pill bg-danger'"
-                                          th:text="${alunos.status}">
+                                    <span th:classappend="${aluno.status.toString() == 'ATIVO'} ? 'badge rounded-pill bg-success' : 'badge rounded-pill bg-danger'"
+                                          th:text="${aluno.status}">
                                     </span>
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <a class="btn btn-sm btn-outline-info me-2 border-0" th:href="@{/editar/{id}(id=${alunos.id})}" title="Editar">
+                                        <a class="btn btn-sm btn-outline-info me-2 border-0" 
+                                           th:href="@{/editar-aluno/{id}(id=${aluno.id})}" title="Editar">
                                             <i class="bi bi-pencil-square fs-5"></i>
                                         </a>
-                                        <a class="btn btn-sm btn-outline-danger border-0" th:href="@{/remover/{id}(id=${alunos.id})}" 
+                                        <a class="btn btn-sm btn-outline-danger border-0" 
+                                           th:href="@{/remover-aluno/{id}(id=${aluno.id})}" 
                                            onclick="return confirm('Tem certeza que deseja excluir este aluno?')" title="Remover">
                                             <i class="bi bi-trash3 fs-5"></i>
                                         </a>

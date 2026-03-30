@@ -3,7 +3,7 @@ package br.com.gerenciamento.model;
 import br.com.gerenciamento.enums.Curso;
 import br.com.gerenciamento.enums.Status;
 import br.com.gerenciamento.enums.Turno;
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -18,7 +18,6 @@ public class Aluno {
     private Long id;
 
     @Column(name = "nome")
-    @Size(min = 5, max = 35, message = "O Nome deve conter entre 5 a 35 caracteres")
     @NotBlank(message = "O nome não pode ser vazio")
     @NotNull
     private String nome;
@@ -45,6 +44,10 @@ public class Aluno {
     @Enumerated(EnumType.STRING)
     @NotNull
     private Turno turno;
+
+    @Column(name = "notaEnade")
+    @NotNull
+    private Double notaEnade;
 
     public Long getId() {
         return id;
@@ -96,5 +99,13 @@ public class Aluno {
 
     public void setTurno(Turno turno) {
         this.turno = turno;
+    }
+
+    public Double getNotaEnade() {
+        return notaEnade;
+    }
+
+    public void setNotaEnade(Double notaEnade) {
+        this.notaEnade = notaEnade;
     }
 }

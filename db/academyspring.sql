@@ -34,18 +34,19 @@ CREATE TABLE `aluno` (
   `nome` varchar(100) NOT NULL,
   `status` varchar(100) NOT NULL,
   `turno` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL
+  `email` varchar(100) NOT NULL,
+  `notaEnade` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `aluno`
 --
 
-INSERT INTO `aluno` (`id`, `curso`, `matricula`, `nome`, `status`, `turno`, `email`) VALUES
-(8, 'ADMINISTRACAO', 'ACA2026877', 'Caça Rato', 'INATIVO', 'MATUTINO', 'teste@teste.com'),
-(9, 'ADMINISTRACAO', 'ACA2026278', 'Abel ', 'ATIVO', 'MATUTINO', 'abel@abel.com'),
-(10, 'BIOMEDICINA', 'ACA2026478', 'teste', 'ATIVO', 'MATUTINO', 'teste@123.teste'),
-(11, 'ENFERMAGEM', 'ACA2026422', 'Caim ', 'ATIVO', 'MATUTINO', 'caim@caim.com');
+INSERT INTO `aluno` (`id`, `curso`, `matricula`, `nome`, `status`, `turno`, `email`, `notaEnade`) VALUES
+(8, 'ADMINISTRACAO', 'ACA2026877', 'Caça Rato', 'INATIVO', 'MATUTINO', 'teste@teste.com', 0),
+(9, 'ADMINISTRACAO', 'ACA2026278', 'Abel ', 'ATIVO', 'MATUTINO', 'abel@abel.com', 0),
+(10, 'BIOMEDICINA', 'ACA2026478', 'teste', 'ATIVO', 'MATUTINO', 'teste@123.teste', 0),
+(11, 'ENFERMAGEM', 'ACA2026422', 'Caim ', 'ATIVO', 'MATUTINO', 'caim@caim.com', 0);
 
 -- --------------------------------------------------------
 

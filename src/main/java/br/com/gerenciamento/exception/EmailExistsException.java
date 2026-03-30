@@ -5,8 +5,8 @@ import java.io.Serial;
 public class EmailExistsException extends Exception {
 
 
-    public EmailExistsException(String message) {
-        super(message);
+    public EmailExistsException(String message_error) {
+        super(message_error);
     }
 
     @Serial

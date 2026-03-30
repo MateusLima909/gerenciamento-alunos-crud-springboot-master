@@ -15,7 +15,11 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
     @Query("SELECT i FROM Aluno i WHERE i.status = 'INATIVO' ")
     public List<Aluno> findByStatusInativo();
 
-    List<Aluno> findByNomeContainingIgnoreCase(String nome);
+   
     List<Aluno> findByStatus(Status status);
+
+    List<Aluno> findByNomeContainingIgnoreCase(String nome);
+
     Aluno findByEmail(String email);
+
 }

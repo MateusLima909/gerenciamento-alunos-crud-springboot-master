@@ -17,9 +17,9 @@
                 <p class="text-secondary">Junte-se ao nosso sistema de gerenciamento</p>
             </div>
 
-            <div class="alert alert-custom alert-dismissible fade show" role="alert" th:if="${message}">
+            <div class="alert alert-custom alert-dismissible fade show" role="alert" th:if="${message_error}">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                <span th:text="${message}"></span>
+                <span th:text="${message_error}"></span>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 

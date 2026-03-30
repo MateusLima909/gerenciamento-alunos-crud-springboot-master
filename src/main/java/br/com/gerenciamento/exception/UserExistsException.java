@@ -4,8 +4,8 @@ import java.io.Serial;
 
 public class UserExistsException extends Exception{
     
-    public UserExistsException(String message) {
-        super(message);
+    public UserExistsException(String message_error) {
+        super(message_error);
     }
 
     @Serial

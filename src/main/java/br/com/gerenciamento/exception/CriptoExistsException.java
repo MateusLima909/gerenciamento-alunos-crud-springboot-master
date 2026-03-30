@@ -4,8 +4,8 @@ import java.io.Serial;
 
 public class CriptoExistsException extends Exception {
 
-    public CriptoExistsException(String message) {
-        super(message);
+    public CriptoExistsException(String message_error) {
+        super(message_error);
     }
 
     @Serial

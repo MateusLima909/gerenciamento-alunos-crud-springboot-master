@@ -4,8 +4,8 @@ import java.io.Serial;
 
 public class ServiceExc extends Exception {
 
-    public ServiceExc(String message) {
-        super(message);
+    public ServiceExc(String message_error) {
+        super(message_error);
     }
 
 

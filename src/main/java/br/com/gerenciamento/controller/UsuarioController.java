@@ -3,6 +3,7 @@ package br.com.gerenciamento.controller;
 import br.com.gerenciamento.model.Aluno;
 import br.com.gerenciamento.model.Usuario;
 import br.com.gerenciamento.service.ServiceUsuario;
+import br.com.gerenciamento.service.ServiceAluno; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,11 +21,15 @@ public class UsuarioController {
     @Autowired
     private ServiceUsuario serviceUsuario;
 
-    // Constantes para evitar erros de digitação e facilitar manutenção
-    private static final String VIEW_LOGIN = "login/login";
+    @Autowired
+    private ServiceAluno serviceAluno;
+
+    private static final String VIEW_LOGIN    = "login/login";
     private static final String VIEW_CADASTRO = "login/cadastro";
+    private static final String VIEW_INDEX    = "home/index";
+    
     private static final String REDIRECT_INDEX = "redirect:/index";
-    private static final String REDIRECT_HOME = "redirect:/";
+    private static final String REDIRECT_HOME  = "redirect:/";
 
     @GetMapping("/")
     public ModelAndView login() {
@@ -36,11 +41,19 @@ public class UsuarioController {
         return new ModelAndView(VIEW_CADASTRO).addObject("usuario", new Usuario());
     }
 
-    @GetMapping("/index")
+    @GetMapping("/index") 
     public ModelAndView index(HttpSession session) {
-        if (session.getAttribute("usuarioLogado") == null) return new ModelAndView(REDIRECT_HOME);
+        if (session.getAttribute("usuarioLogado") == null) {
+            return new ModelAndView(REDIRECT_HOME);
+        }
+
+        ModelAndView mv = new ModelAndView(VIEW_INDEX);
+
+        mv.addObject("aluno", new Aluno());
+        mv.addObject("mediaAtivos", serviceAluno.calcularMediaAtivos());
+        mv.addObject("quantidadeAtivos", serviceAluno.buscarAtivos().size());
         
-        return new ModelAndView("home/index").addObject("aluno", new Aluno());
+        return mv;
     }
 
     @PostMapping("/salvarUsuario")
@@ -49,27 +62,30 @@ public class UsuarioController {
 
         try {
             serviceUsuario.salvarUsuario(usuario);
-            attr.addFlashAttribute("message", "Cadastro realizado com sucesso!");
+            // Alterado para message_success
+            attr.addFlashAttribute("message_success", "Cadastro realizado com sucesso!");
             return new ModelAndView(REDIRECT_HOME);
         } catch (Exception e) {
-            return retornarParaCadastro(usuario).addObject("message", e.getMessage());
+            // Alterado para message_error
+            return retornarParaCadastro(usuario).addObject("message_error", e.getMessage());
         }
     }
 
     @PostMapping("/login")
     public ModelAndView realizarLogin(Usuario usuario, HttpSession session) {
         try {
-            // A mágica do MD5 foi para dentro do Service!
             Usuario userLogin = serviceUsuario.loginUser(usuario.getUser(), usuario.getSenha());
             
             if (userLogin == null) {
-                return new ModelAndView(VIEW_LOGIN).addObject("message", "Usuário ou senha inválidos.");
+                // Alterado para message_error
+                return new ModelAndView(VIEW_LOGIN).addObject("message_error", "Usuário ou senha inválidos.");
             }
 
             session.setAttribute("usuarioLogado", userLogin);
             return new ModelAndView(REDIRECT_INDEX);
         } catch (Exception e) {
-            return new ModelAndView(VIEW_LOGIN).addObject("message", "Erro ao processar login.");
+            // Alterado para message_error
+            return new ModelAndView(VIEW_LOGIN).addObject("message_error", "Erro ao processar login.");
         }
     }
 
