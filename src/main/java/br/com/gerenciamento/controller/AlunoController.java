@@ -144,4 +144,16 @@ public class AlunoController {
 
         return new ModelAndView(VIEW_PESQ).addObject("alunos", lista);
     }
+
+    @GetMapping("/alunos-melhor-desempenho")
+public ModelAndView listarMelhoresAlunos() {
+    ModelAndView mv = new ModelAndView(PATH_ALUNO + "alunos-media-maior-enade");
+    
+    Double mediaGeral = serviceAluno.calcularMediaAtivos();
+    List<Aluno> melhoresAlunos = serviceAluno.buscarAlunosAcimaDaMedia();
+    
+    mv.addObject("alunosList", melhoresAlunos);
+    mv.addObject("mediaGeral", mediaGeral);
+    return mv;
+}
 }

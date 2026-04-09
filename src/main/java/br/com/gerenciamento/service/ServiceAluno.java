@@ -48,7 +48,7 @@ public class ServiceAluno {
     }
 
     public List<Aluno> pesquisarPorNome(String nome) {
-        return alunoRepository.findByNomeContainingIgnoreCase(nome);
+        return alunoRepository.encontrarPorNome(nome);
     }
 
     public Double calcularMediaAtivos() {
@@ -69,5 +69,10 @@ public class ServiceAluno {
         if (alunoExistente != null && !alunoExistente.getId().equals(aluno.getId())) {
             throw new EmailExistsException("Já existe um registro com o e-mail: " + email);
         }
+    }
+
+    public List<Aluno> buscarAlunosAcimaDaMedia() {
+        Double media = calcularMediaAtivos();
+        return alunoRepository.findByNotaMaiorOuIgualMedia(media);
     }
 }

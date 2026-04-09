@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Destaques ENADE | AcademySpring</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div th:replace="fragmentos/fragmentos :: cabecalho"></div>
+
+    <main class="dashboard-wrapper">
+        <div class="overlay"></div>
+        <div class="container content-area">
+            
+            <div class="glass-card shadow-lg p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold text-white mb-0">Alunos Acima da Média</h2>
+                        <p class="text-light opacity-75 small">
+                            Exibindo alunos ativos com nota maior ou igual a 
+                            <span class="text-accent fw-bold" th:text="${#numbers.formatDecimal(mediaGeral, 1, 2)}">0.0</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-custom table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Curso</th>
+                                <th scope="col" class="text-center">Nota ENADE</th>
+                                <th scope="col" class="text-center">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:if="${#lists.isEmpty(alunosList)}">
+                                <td colspan="4" class="text-center text-white py-5 opacity-50">
+                                    <p>Nenhum aluno atingiu a média ainda.</p>
+                                </td>
+                            </tr>
+                            <tr th:each="aluno : ${alunosList}">
+                                <td class="fw-bold text-white" th:text="${aluno.nome}"></td>
+                                <td><span class="badge bg-dark" th:text="${aluno.curso}"></span></td>
+                                <td class="text-center text-accent fw-bold" th:text="${aluno.notaEnade}"></td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill bg-success">ATIVO</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a th:href="@{/dashboard}" class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-arrow-left"></i> Voltar ao Painel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
